@@ -1,6 +1,8 @@
 package com.harmonic.eis.messages;
 
 import java.nio.ByteBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ public abstract class EisMessage {
 
     public abstract void parseMessage(byte[] messageContent, int offset, StringBuilder sb);
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final Map<Short, String> parameterTypeLabels = new HashMap<>();
 
     static {
@@ -46,86 +49,62 @@ public abstract class EisMessage {
         return parameterTypeLabels.getOrDefault(type, "Unknown Type");
     }
 
-    public void printTLVContent(ByteBuffer buffer, int totalLength, StringBuilder sb) {
-        int i = totalLength, type, length, val;
-        while (i > 0) {
-            type = buffer.getShort();
-            length = buffer.getShort();
-            i -= 4;
-            if (length == 1) {
-                val = buffer.get();
-                System.out.println(getLabelByType((short) type) + ": " + val);
-                sb.append(getLabelByType((short) type) + ": " + val + "\n");
-            } else if (length == 2) {
-                val = Short.toUnsignedInt(buffer.getShort());
-                String description = "";
-                if (type == 0x7000) // error status
-                {
-                    String hexString = String.format("0x%04X", val);
-                    description += " (" + ErrorCodes.getLabelByCode(hexString) + ")";
-                }
-                System.out.println(getLabelByType((short) type) + ": " + val + description);
-                sb.append(getLabelByType((short) type) + ": " + val + description + "\n");
-            } else if (length == 4) {
-                val = buffer.getInt();
-                System.out.println(getLabelByType((short) type) + ": " + val);
-                sb.append(getLabelByType((short) type) + ": " + val + "\n");
-            } else if (type == 0x5) {
-                // ECM Group case
-                System.out.println();
+    protected void printTLVContent(ByteBuffer buffer, int totalLength, StringBuilder sb) {
+        while (totalLength > 0) {
+            short type = buffer.getShort();
+            int length = Short.toUnsignedInt(buffer.getShort());
+            totalLength -= 4; // Account for the type and length fields themselves
+
+            String label = getLabelByType(type);
+            if (type == 0x0b) { // Activation Time
+                handleActivationTime(buffer, sb, label);
+            } else if (type == 0x05) { // ECM Group, requires special handling
                 sb.append("\n");
-                printTLVContent(buffer, length, sb);
-            } else if (type == 0x0b) {
-                printActivationTime(buffer, sb);
+                System.out.println();
+                printTLVContent(buffer, length, sb); // Recursive call for nested TLV
             } else {
-                val = 0;
-                System.out.print(getLabelByType((short) type) + ": ");
-                sb.append(getLabelByType((short) type) + ": ");
-                StringBuilder hexString = new StringBuilder();
-                for (int j = 0; j < length; j++) {
-                    val = buffer.get();
-                    String hex = String.format("%02X", val & 0xFF); // Bitwise AND with 0xFF to prevent sign extension
-                    hexString.append(hex); 
-                }
-                System.out.print("0x" + hexString.toString()); 
-                sb.append("0x").append(hexString.toString());                                                            
-                System.out.println();
-                sb.append("\n");
+                handleGenericValue(buffer, type, length, sb, label);
             }
-            i -= length;
+            totalLength -= length; // Deduct the length of the current TLV content
         }
     }
 
-    private static int bcdToDecimal(byte b) {
-        return ((b >> 4) & 0x0F) * 10 + (b & 0x0F);
+    private void handleGenericValue(ByteBuffer buffer, short type, int length, StringBuilder sb, String label) {
+        byte[] bytes = new byte[length];
+        buffer.get(bytes);
+        String valueDescription = formatBytesAsHex(bytes);
+
+        String description = "";
+        if (type == 0x7000) { // Error status might have an additional description
+            description = " (" + ErrorCodes.getLabelByCode(valueDescription) + ")";
+        }
+
+        String output = label + ": " + valueDescription + description;
+        System.out.println(output);
+        sb.append(output).append("\n");
     }
 
-    private void printActivationTime(ByteBuffer buffer, StringBuilder sb) {
+    private void handleActivationTime(ByteBuffer buffer, StringBuilder sb, String label) {
         buffer.get();
-        int year = (buffer.get());
-        int month = bcdToDecimal(buffer.get());
-        int day = bcdToDecimal(buffer.get());
-        int hour = bcdToDecimal(buffer.get());
-        int minute = bcdToDecimal(buffer.get());
-        int second = bcdToDecimal(buffer.get());
-        int hundredthSecond = bcdToDecimal(buffer.get());
+        LocalDateTime dateTime = LocalDateTime.of(
+                buffer.get() + 2000, // Year
+                buffer.get(), // Month
+                buffer.get(), // Day
+                buffer.get(), // Hour
+                buffer.get(), // Minute
+                buffer.get(), // Second
+                buffer.get() * 10000000);
+        String formattedDate = DATE_TIME_FORMATTER.format(dateTime);
+        String output = label + ": " + formattedDate;
+        System.out.println(output);
+        sb.append(output).append("\n");
+    }
 
-        // Assuming the year needs to be offset by 2000
-        year += 2000;
-
-        System.out.println("Year: " + year);
-        sb.append("Year: " + year + '\n');
-        System.out.println("Month: " + month);
-        sb.append("Month: " + month + '\n');
-        System.out.println("Day: " + day);
-        sb.append("Day: " + day + '\n');
-        System.out.println("Hour: " + hour);
-        sb.append("Hour: " + hour + '\n');
-        System.out.println("Minute: " + minute);
-        sb.append("Minute: " + minute + '\n');
-        System.out.println("Second: " + second);
-        sb.append("Second: " + second + '\n');
-        System.out.println("Hundredth of a second: " + hundredthSecond);
-        sb.append("Hundredth of a second: " + hundredthSecond + '\n');
+    private static String formatBytesAsHex(byte[] bytes) {
+        StringBuilder hexString = new StringBuilder("0x");
+        for (byte b : bytes) {
+            hexString.append(String.format("%02X", b & 0xFF));
+        }
+        return hexString.toString();
     }
 }
