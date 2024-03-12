@@ -27,3 +27,5 @@ Replace `<repository-url>` with the URL of your project's repository.
 
 Navigate to the project directory and run:
 
+### UI Example
+![eis](https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/39f19695-8755-40cd-8b65-141685f896d1)
