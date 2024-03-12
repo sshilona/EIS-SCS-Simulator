@@ -32,5 +32,8 @@ Navigate to the project directory and run.
 
 
 
-https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/0bdaf8fd-c11c-4967-83e5-6ca0b04331f8
+
+https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/b181eb5e-1bd1-4f9d-bd81-4e04c6951a06
+
+
 
