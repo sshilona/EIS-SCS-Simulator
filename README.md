@@ -29,3 +29,8 @@ Navigate to the project directory and run:
 
 ### UI Example
 ![eis](https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/39f19695-8755-40cd-8b65-141685f896d1)
+
+
+
+https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/0bdaf8fd-c11c-4967-83e5-6ca0b04331f8
+
