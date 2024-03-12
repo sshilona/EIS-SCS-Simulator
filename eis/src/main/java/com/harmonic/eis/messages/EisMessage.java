@@ -54,7 +54,6 @@ public abstract class EisMessage {
             short type = buffer.getShort();
             int length = Short.toUnsignedInt(buffer.getShort());
             totalLength -= 4; // Account for the type and length fields themselves
-
             String label = getLabelByType(type);
             if (type == 0x0b) { // Activation Time
                 handleActivationTime(buffer, sb, label);
@@ -70,19 +69,34 @@ public abstract class EisMessage {
     }
 
     private void handleGenericValue(ByteBuffer buffer, short type, int length, StringBuilder sb, String label) {
-        byte[] bytes = new byte[length];
-        buffer.get(bytes);
-        String valueDescription = formatBytesAsHex(bytes);
-
-        String description = "";
-        if (type == 0x7000) { // Error status might have an additional description
-            description = " (" + ErrorCodes.getLabelByCode(valueDescription) + ")";
+        String output;
+        switch (length) {
+            case 1: // Handling single-byte values
+                int value1 = buffer.get() & 0xFF; // Ensure it's treated as unsigned
+                output = label + ": " + value1;
+                break;
+            case 2: // Handling two-byte values
+                int value2 = Short.toUnsignedInt(buffer.getShort());
+                output = label + ": " + value2;
+                if (type == 0x7000) { // Example: For error status, you might want additional description
+                    output += " (" + ErrorCodes.getLabelByCode("0x" + Integer.toHexString(value2)) + ")";
+                }
+                break;
+            case 4: // Handling four-byte values
+                int value4 = buffer.getInt();
+                output = label + ": " + value4;
+                break;
+            default: // For other lengths, assuming hexadecimal representation is preferred
+                byte[] bytes = new byte[length];
+                buffer.get(bytes);
+                String valueDescription = formatBytesAsHex(bytes);
+                output = label + ": " + valueDescription;
+                break;
         }
-
-        String output = label + ": " + valueDescription + description;
         System.out.println(output);
         sb.append(output).append("\n");
     }
+    
 
     private void handleActivationTime(ByteBuffer buffer, StringBuilder sb, String label) {
         buffer.get();
