@@ -1,0 +1,39 @@
+
+@url = http://127.0.0.1:9090/eis/create-client HTTP/1.1
+@contentType = application/json
+POST {{url}}
+Content-Type: {{contentType}}
+
+< createClient.json
+
+###
+POST http://127.0.0.1:9090/eis/channel-setup HTTP/1.1
+Content-Type: {{contentType}}
+
+< channelSetup.json
+
+###
+POST http://127.0.0.1:9090/eis/channel-test HTTP/1.1
+Content-Type: {{contentType}}
+
+< channelTest.json
+
+
+###
+POST http://127.0.0.1:9090/eis/channel-close HTTP/1.1
+Content-Type: {{contentType}}
+
+< channelClose.json
+
+
+###
+POST http://127.0.0.1:9090/eis/scg-provision HTTP/1.1
+Content-Type: {{contentType}}
+
+< scgProvision.json
+
+###
+POST http://127.0.0.1:9090/eis/scg-provision HTTP/1.1
+Content-Type: {{contentType}}
+
+< scgDeProvision.json

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EIS Operations</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/fav.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h2>EIS Simulator</h2>
+    <div class="content-area">
+        <div class="button-area">
+            <div class="row">
+                <button class="action-btn" id="createClient">Create Client</button>
+                <button class="default-btn" id="getDefaultcreateClient">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="channelSetup" style="background-color: #4c87af">Channel Setup</button>
+                <button class="default-btn" id="getDefaultchannelSetup">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="channelClose" style="background-color: #4c87af">Channel Close</button>
+                <button class="default-btn" id="getDefaultchannelClose">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="channelTest" style="background-color: #4c87af">Channel Test</button>
+                <button class="default-btn" id="getDefaultchannelTest">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="channelReset" style="background-color: #4c87af">Channel Reset</button>
+                <button class="default-btn" id="getDefaultchannelReset">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="scgProvision" style="background-color: #a79054b3">SCG Provision</button>
+                <button class="default-btn" id="getDefaultscgProvision">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="scgDeProvision" style="background-color: #a79054b3">SCG
+                    DeProvision</button>
+                <button class="default-btn" id="getDefaultscgDeProvision">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="scgListRequest" style="background-color: #a79054b3">SCG List</button>
+                <button class="default-btn" id="getDefaultscgListRequest">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="scgTest" style="background-color: #a79054b3">SCG Test</button>
+                <button class="default-btn" id="getDefaultscgTest">Get Default</button><br>
+            </div>
+            <div class="row">
+                <button class="action-btn" id="runScript" style="background-color: #a693c7;border-radius:5px">Run E2E
+                    Script</button><br>
+            </div>
+        </div>
+
+        <textarea id="jsonInput" rows="10" cols="50" spellcheck="false" >{}</textarea><br>
+    </div>
+    <div class="row">
+        <div class="response-area">
+            <div class="header-label">Request</div>
+            <div id="responseArea" class="response"></div>
+        </div>
+        <div class="response-area">
+            <div class="header-label">Response</div>
+            <div id="responseArea2" class="response"></div>
+        </div>
+    </div>
+    <div style="margin-left: 10px;margin-top: 50px;font-size: 12px;">          
+        <span style="color: #000000;">Designed by Vibranium</span>           
+      </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

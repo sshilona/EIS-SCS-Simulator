@@ -1,0 +1,24 @@
+{
+    "channelId": 111,
+    "scgId": 2,
+    "transportStreamId": 10,
+    "originalNetworkId": 1,
+    "scgReferenceId": 1463935,
+    "recommendedCpDuration": 0,
+    "serviceId": 1,
+    "ecmGroups": [
+      {
+        "ecmId": 1001,
+        "superCasId": "10000",
+        "accessCriteria": "AABBCCDDEEFF",
+        "acChangeFlag": true
+      },
+      {
+        "ecmId": 1002,
+        "superCasId": "10000",
+        "accessCriteria": "112233445566",
+        "acChangeFlag": false
+      }
+    ]
+  }
+  

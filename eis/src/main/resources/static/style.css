@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    margin-left: 15px;
+}
+
+h2 {
+    color: #777777;
+    font-size: 27px;
+}
+
+
+/* Style for the left button */
+.action-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: -1px;
+    /* This overlaps the border to prevent double-width lines */
+    width: 160px;
+}
+
+/* Style for the right button */
+.default-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 100px;
+}
+
+/* Use this if the buttons are wrapped in a container or row class */
+.row .action-btn,
+.row .default-btn {
+    display: inline-block;
+    /* or inline-flex */
+    vertical-align: top;
+    /* Align the tops of inline-block elements */
+}
+
+
+/* Add this new section to your existing CSS */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 10px;
+}
+
+/* Update existing button styles if needed */
+.action-btn,
+.default-btn {
+
+    /* Adjust space between buttons */
+    padding: 10px 15px;
+    /* Adjust padding as needed */
+
+    /* Optional: adds rounded corners */
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    /* Adjust font size as needed */
+
+    /* Fixed width for all buttons */
+    transition: background-color 0.2s, transform 0.2s;
+    /* Smooth transition for visual feedback */
+    cursor: pointer;
+    /* Changes the cursor to signify a clickable item */
+}
+
+.action-btn:hover,
+.default-btn:hover {
+    background-color: #4b5b61;
+    /* A darker shade of the original blue */
+    transform: scale(1.05);
+    /* Slightly scale the button to give feedback */
+}
+
+.action-btn:active,
+.default-btn:active {
+    transform: scale(0.95);
+    /* Slightly scale down the button when clicked */
+    background-color: #c0a615;
+    /* An even darker shade for the clicked state */
+}
+
+
+.action-btn {
+    background-color: #4caf50b0;
+    /* Green */
+    color: white;
+}
+
+.default-btn {
+    background-color: #a1a9ab99;
+    color: #323232;
+    width: 120px;
+}
+
+.content-area {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button-area {
+    width: 20%;
+    /* Button area takes up 30% of the container */
+    display: flex;
+    flex-direction: column;
+}
+
+#jsonInput {
+    flex: 2;
+    /* This assigns twice the space to the textarea compared to the buttons area */
+    height: auto;
+    /* Adjust based on your content */
+    margin-left: 20px;
+    /* Space between buttons and textarea */
+}
+
+.response {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f2f2f25e;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow-y: auto;
+    /* Adds vertical scrollbar if content overflows */
+    height: 400px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    
+    /* This will allow each .response to take up an equal amount of space in the .row container */
+    width: 97%;
+    /* This will ensure that each .response takes up half of the width */
+}
+
+.header-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    /* slightly larger than the text in the response areas */
+    color: #777777;
+    margin-bottom: 2px;
+    /* spacing between the label and the box below it */
+    font-weight: bold;
+    /* make it bold to stand out */
+}
+
+/* You might want to add this to prevent the labels from being too wide */
+.response-area {
+    width: 45%;
+    flex: 1;
+    /* Ensures each side takes up half the width */
+}
