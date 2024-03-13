@@ -44,7 +44,7 @@ This project exposes several REST endpoints for managing clients, channels, and 
 Endpoint: POST /eis/create-client
 Description: Provisions a new client with the specified IP and port.
 Example Request Payload:
-
+```json
 {
     "ip": "10.42.21.223",
     "port": 11000
@@ -54,7 +54,7 @@ Example Request Payload:
 Endpoint: POST /eis/channel-setup
 Description: Sets up a channel with the given ID.
 Example Request Payload:
-
+```json
 {
     "channelId": 111
 }
@@ -63,7 +63,7 @@ Example Request Payload:
 Endpoint: POST /eis/channel-close
 Description: Closes the specified channel.
 Example Request Payload:
-
+```json
 {
     "channelId": 111
 }
@@ -72,7 +72,7 @@ Example Request Payload:
 Endpoint: POST /eis/channel-test
 Description: Tests the specified channel.
 Example Request Payload:
-
+```json
 {
     "channelId": 111
 }
@@ -81,7 +81,7 @@ Example Request Payload:
 Endpoint: POST /eis/channel-reset
 Description: Resets the specified channel.
 Example Request Payload:
-
+```json
 {
     "channelId": 111
 }
@@ -90,7 +90,7 @@ Example Request Payload:
 Endpoint: POST /eis/scg-provision
 Description: Provisions an SCG with detailed configurations.
 Example Request Payload:
-
+```json
 {
     "channelId": 111,
     "scgId": 2,
@@ -119,7 +119,7 @@ Example Request Payload:
 Endpoint: POST /eis/scg-list
 Description: Retrieves a list of SCGs based on the provided criteria.
 Example Request Payload:
-
+```json
 {
     "channelId": 111
 }
@@ -128,7 +128,7 @@ Example Request Payload:
 Endpoint: POST /eis/scg-test
 Description: Tests the specified SCG provision.
 Example Request Payload:
-
+```json
 {
     "channelId": 111,
     "scgId": 2
