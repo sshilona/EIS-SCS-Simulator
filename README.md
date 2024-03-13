@@ -37,3 +37,99 @@ https://github.com/sshilona/EIS-SCS-Simulator/assets/163118477/b181eb5e-1bd1-4f9
 
 
 
+### REST API Interface
+This project exposes several REST endpoints for managing clients, channels, and SCG (Service Component Group) provisions. Below are the details of these endpoints along with example request payloads.
+
+**Create Client**
+Endpoint: POST /eis/create-client
+Description: Provisions a new client with the specified IP and port.
+Example Request Payload:
+
+{
+    "ip": "10.42.21.223",
+    "port": 11000
+}
+
+**Channel Setup**
+Endpoint: POST /eis/channel-setup
+Description: Sets up a channel with the given ID.
+Example Request Payload:
+
+{
+    "channelId": 111
+}
+
+**Channel Close**
+Endpoint: POST /eis/channel-close
+Description: Closes the specified channel.
+Example Request Payload:
+
+{
+    "channelId": 111
+}
+
+**Channel Test**
+Endpoint: POST /eis/channel-test
+Description: Tests the specified channel.
+Example Request Payload:
+
+{
+    "channelId": 111
+}
+
+**Channel Reset**
+Endpoint: POST /eis/channel-reset
+Description: Resets the specified channel.
+Example Request Payload:
+
+{
+    "channelId": 111
+}
+
+**SCG Provision**
+Endpoint: POST /eis/scg-provision
+Description: Provisions an SCG with detailed configurations.
+Example Request Payload:
+
+{
+    "channelId": 111,
+    "scgId": 2,
+    "transportStreamId": 10,
+    "originalNetworkId": 1,
+    "scgReferenceId": 1463935,
+    "recommendedCpDuration": 0,
+    "serviceId": 1,
+    "ecmGroups": [
+        {
+            "ecmId": 1001,
+            "superCasId": "10000",
+            "accessCriteria": "AABBCCDDEEFF",
+            "acChangeFlag": true
+        },
+        {
+            "ecmId": 1002,
+            "superCasId": "10000",
+            "accessCriteria": "112233445566",
+            "acChangeFlag": false
+        }
+    ]
+}
+
+**SCG List**
+Endpoint: POST /eis/scg-list
+Description: Retrieves a list of SCGs based on the provided criteria.
+Example Request Payload:
+
+{
+    "channelId": 111
+}
+
+**SCG Test**
+Endpoint: POST /eis/scg-test
+Description: Tests the specified SCG provision.
+Example Request Payload:
+
+{
+    "channelId": 111,
+    "scgId": 2
+}
