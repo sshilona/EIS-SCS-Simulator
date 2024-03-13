@@ -49,7 +49,7 @@ Example Request Payload:
     "ip": "10.42.21.223",
     "port": 11000
 }
-
+```
 **Channel Setup**
 Endpoint: POST /eis/channel-setup
 Description: Sets up a channel with the given ID.
@@ -58,7 +58,7 @@ Example Request Payload:
 {
     "channelId": 111
 }
-
+```
 **Channel Close**
 Endpoint: POST /eis/channel-close
 Description: Closes the specified channel.
@@ -67,7 +67,7 @@ Example Request Payload:
 {
     "channelId": 111
 }
-
+```
 **Channel Test**
 Endpoint: POST /eis/channel-test
 Description: Tests the specified channel.
@@ -76,7 +76,7 @@ Example Request Payload:
 {
     "channelId": 111
 }
-
+```
 **Channel Reset**
 Endpoint: POST /eis/channel-reset
 Description: Resets the specified channel.
@@ -85,7 +85,7 @@ Example Request Payload:
 {
     "channelId": 111
 }
-
+```
 **SCG Provision**
 Endpoint: POST /eis/scg-provision
 Description: Provisions an SCG with detailed configurations.
@@ -114,7 +114,7 @@ Example Request Payload:
         }
     ]
 }
-
+```
 **SCG List**
 Endpoint: POST /eis/scg-list
 Description: Retrieves a list of SCGs based on the provided criteria.
@@ -123,7 +123,7 @@ Example Request Payload:
 {
     "channelId": 111
 }
-
+```
 **SCG Test**
 Endpoint: POST /eis/scg-test
 Description: Tests the specified SCG provision.
@@ -133,3 +133,4 @@ Example Request Payload:
     "channelId": 111,
     "scgId": 2
 }
+```
