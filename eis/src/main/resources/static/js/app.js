@@ -3,8 +3,9 @@ $(document).ready(function () {
     $('#jsonInput').on('input', function () {
         fGetDefaultPress = true
     });
+    var connectionDetails = getFromCookies();
     var defaults = {
-        "createClient": { "ip": "10.42.21.223", "port": 11000 },
+        "createClient": { "ip": connectionDetails.ip, "port": connectionDetails.port },
         "channelSetup": { "channelId": 111 },
         "channelClose": { "channelId": 111 },
         "channelTest": { "channelId": 111 },
@@ -61,7 +62,46 @@ $(document).ready(function () {
         fGetDefaultPress = true;
     });
 
+    function saveToCookies() {
+        var jsonData = $('#jsonInput').val();
+        try {
+            var obj = JSON.parse(jsonData);
+            if (obj.ip && obj.port) {
+                // Save to cookies for 7 days
+                document.cookie = "ip=" + obj.ip + "; max-age=" + (7 * 24 * 60 * 60);
+                document.cookie = "port=" + obj.port + "; max-age=" + (7 * 24 * 60 * 60);
+            }
+        } catch (e) {
+            console.error("Error parsing JSON: ", e);
+        }
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function getFromCookies() {
+        var ip = getCookie('ip');
+        var port = getCookie('port');
+
+        if (!ip) {
+            ip = "10.42.21.223"; // Default IP
+        }
+        if (!port) {
+            port = 11000; // Default port
+        }
+        return { ip: ip, port: port };
+    } 
+
     function sendRequest(id, endpoint, requestBody = $('#jsonInput').val()) {
+        saveToCookies();
         if (!fGetDefaultPress) {
             $("#getDefault" + id).click();
             requestBody = $('#jsonInput').val()
